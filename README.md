@@ -18,11 +18,12 @@ output derivations (the results of eg. a `fetchurl`), and those are filtered to
 those FODs that are not cached on `cache.nixos.org` or `tarballs.nixos.org`
 (this is a useful property because the nix team [seems concerned with keeping
 FODs accessible
-indefinitely](https://discourse.nixos.org/t/upcoming-garbage-collection-for-cache-nixos-org/39078#garbage-collection-policy-and-implications-2)).
-These FODs are then copied from the local nix store or downloaded, and then
-copied into the given destination in a format compatible with the
-content-addressed tarball-archive at [tarballs.nixos.org](tarballs.nixos.org),
-which `fetchurl` can fall back to if all urls are inaccesible.
+indefinitely](https://discourse.nixos.org/t/upcoming-garbage-collection-for-cache-nixos-org/39078#garbage-collection-policy-and-implications-2),
+so those don't have to be preserved manually).
+These FODs are then either downloaded or copied from the local nix store to the
+rclone-compatible destination in a format compatible with the content-addressed
+tarball-archive at [tarballs.nixos.org](tarballs.nixos.org), which `fetchurl`
+can fall back to if all urls are inaccessible.
 
 # Usage
 The first argument is a nix derivation, the second the destination which will
@@ -49,7 +50,7 @@ The sudo is likely necessary because otherwise the build is relegated to the
 alternative, of course, is to modify the service to include this variable.
 
 # Completeness
-This tool supports FODs with hash method `nar` and `flat` or `text` (the latter
+This tool supports FODs with hash method `nar`, `flat`, and `text` (the latter
 of which is handled exactly like `flat`, which seems like the right thing to
 do?). `nar` only supports sources that are single archives which can be
 extracted with `tar`.
