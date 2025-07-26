@@ -1,18 +1,17 @@
 # Motivation
-The goal of `copy-non-store-tarball` is to aid in finding and preserving
+The goal of `copy-untracked-tarballs` is to aid in finding and preserving
 non-nixpkgs dependencies a flake or some other nix derivation depends on.  
 These dependencies are especially crucial because they are usually exempt from
-being cached or preserved on `cache.nixos.org` and `tarballs.nixos.org`, so once
-their source disappears, they have to be added manually, or the derivation that
+being preserved on `cache.nixos.org` and `tarballs.nixos.org`, so once their
+source disappears, they have to be added manually, or the derivation that
 depends on them can not be built.  
 My personal usecase for this are nightly builds of `zig`, which can be
-downloaded from the official server using [this zig
-overlay](https://github.com/mitchellh/zig-overlay), but since the official
-server removes non-release builds older than a few weeks, this quickly leads to
-(naively) unbuildable derivations.
+downloaded from the official server using [this flake](https://github.com/mitchellh/zig-overlay),
+but since the official server removes non-release builds older than a few weeks,
+this quickly leads to (naively) unbuildable derivations.
 
 # Functionality
-`copy-non-store-tarball` requires a nix derivation and a rclone-compatible
+`copy-untracked-tarballs` requires a nix derivation and a rclone-compatible
 destination as inputs. The derivations' dependencies are searched for fixed
 output derivations (the results of eg. a `fetchurl`), and those are filtered to
 those FODs that are not cached on `cache.nixos.org` or `tarballs.nixos.org`
@@ -30,11 +29,11 @@ The first argument is a nix derivation, the second the destination which will
 contain the tarballs, and the third, optional, argument contains flags
 passed to `rclone`.
 ```bash
-copy-non-store-tarballs .#default /srv/http/tarballs
+copy-untracked-tarballs .#default /srv/http/tarballs
 ```
 or
 ```bash
-copy-non-store-tarballs /run/current-system s3-bucket:/bucketname '-P --config ./rclone.conf'
+copy-untracked-tarballs /run/current-system s3-bucket:/bucketname '-P --config ./rclone.conf'
 ```
 
 # Using the tarballs

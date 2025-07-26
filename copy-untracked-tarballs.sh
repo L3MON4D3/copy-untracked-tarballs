@@ -18,8 +18,8 @@ function help {
 	echo "Supply a derivation and a rclone-compatible destination as the first two arguments."
 	echo "The third argument are additional flags passed to rclone."
 	echo "Examples:"
-	echo "  copy-non-store-tarballs /run/current-system 's3-bucket:/bucketname' '-P --config ./rclone.conf'"
-	echo "  copy-non-store-tarballs .#devShells.x86_64-linux.default 's3-bucket:/bucketname' '-P --config ./rclone.conf'"
+	echo "  copy-untracked-tarballs /run/current-system 's3-bucket:/bucketname' '-P --config ./rclone.conf'"
+	echo "  copy-untracked-tarballs .#devShells.x86_64-linux.default 's3-bucket:/bucketname' '-P --config ./rclone.conf'"
 	echo ""
 }
 
