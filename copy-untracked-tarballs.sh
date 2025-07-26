@@ -23,8 +23,6 @@ function help {
 	echo ""
 }
 
-trap cleanup EXIT
-
 if [ ! -v 1 ] || [ ! -v 2 ]; then
 	help
 	exit
@@ -43,6 +41,8 @@ DL_DIR=$(mktemp -d)
 function cleanup {
 	rm -rf "$DL_DIR"
 }
+
+trap cleanup EXIT
 
 # don't split!
 IFS=$''
